@@ -1,0 +1,8 @@
+{
+  "name": "Kan | Open-Source Trello Alternative (Kanban Boards for Teams)",
+  "short_name": "Kan Boards",
+  "description": "Kanban boards, lists and cards for teams, with Trello import",
+  "category": "Other",
+  "image": "https://raw.githubusercontent.com/two-workspaces/kan/main/icon.png",
+  "card_desc": "Kan: an open-source Trello alternative. Boards, lists, cards with labels, checklists, comments and attachments, workspaces with members, and one-click Trello import. Runs Kan 0.6.0 on Postgres with a Railway bucket for files and invite-only sign-up."
+}

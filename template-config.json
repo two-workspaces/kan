@@ -1,0 +1,153 @@
+{
+  "buckets": {
+    "5c8e1f37-2a94-4d6b-b0e3-7f9a2c4d1e86": {
+      "name": "Files"
+    }
+  },
+  "services": {
+    "e7b3d1a9-6c2f-4e85-9a40-3d1f8b7c5e29": {
+      "icon": "https://raw.githubusercontent.com/two-workspaces/kan/main/icon.png",
+      "name": "Kan",
+      "build": {
+        "dockerfilePath": "Dockerfile"
+      },
+      "deploy": {
+        "startCommand": null,
+        "healthcheckPath": "/api/auth/ok",
+        "healthcheckTimeout": 300,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "repo": "https://github.com/two-workspaces/kan",
+        "rootDirectory": null
+      },
+      "networking": {
+        "serviceDomains": {
+          "<hasDomain>": {}
+        }
+      },
+      "variables": {
+        "KAN_ADMIN_EMAIL": {
+          "defaultValue": "",
+          "description": "Email you sign in with - the admin account is created on first boot",
+          "isOptional": false
+        },
+        "KAN_ADMIN_PASSWORD": {
+          "defaultValue": "${{secret(24, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Admin password, used on first boot only - change it later in Settings",
+          "isOptional": false
+        },
+        "NEXT_PUBLIC_BASE_URL": {
+          "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+          "description": "Public URL of Kan - set it to your custom domain after adding one",
+          "isOptional": false
+        },
+        "BETTER_AUTH_SECRET": {
+          "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Signs sessions - auto-generated",
+          "isOptional": false
+        },
+        "POSTGRES_URL": {
+          "defaultValue": "postgresql://${{Postgres.POSTGRES_USER}}:${{Postgres.POSTGRES_PASSWORD}}@${{Postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{Postgres.POSTGRES_DB}}",
+          "description": "Postgres connection - leave as is",
+          "isOptional": false
+        },
+        "NEXT_PUBLIC_ALLOW_CREDENTIALS": {
+          "defaultValue": "true",
+          "description": "Sign in with email and password",
+          "isOptional": false
+        },
+        "NEXT_PUBLIC_DISABLE_SIGN_UP": {
+          "defaultValue": "true",
+          "description": "Only people you invite can create an account - set to false for open sign-up",
+          "isOptional": false
+        },
+        "S3_ENDPOINT": {
+          "defaultValue": "${{Files.ENDPOINT}}",
+          "description": "Bucket for attachments and avatars - leave as is",
+          "isOptional": false
+        },
+        "S3_REGION": {
+          "defaultValue": "${{Files.REGION}}",
+          "description": "Bucket region - leave as is",
+          "isOptional": false
+        },
+        "S3_ACCESS_KEY_ID": {
+          "defaultValue": "${{Files.ACCESS_KEY_ID}}",
+          "description": "Bucket access key - leave as is",
+          "isOptional": false
+        },
+        "S3_SECRET_ACCESS_KEY": {
+          "defaultValue": "${{Files.SECRET_ACCESS_KEY}}",
+          "description": "Bucket secret key - leave as is",
+          "isOptional": false
+        },
+        "NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME": {
+          "defaultValue": "${{Files.BUCKET}}",
+          "description": "Bucket for card attachments - leave as is",
+          "isOptional": false
+        },
+        "NEXT_PUBLIC_AVATAR_BUCKET_NAME": {
+          "defaultValue": "${{Files.BUCKET}}",
+          "description": "Bucket for avatars - leave as is",
+          "isOptional": false
+        },
+        "PORT": {
+          "defaultValue": "3000",
+          "description": "Port Railway routes to - leave as is",
+          "isOptional": false
+        }
+      }
+    },
+    "a2d6f4c8-1e7b-4935-8c0a-6b5e9d3f7a14": {
+      "icon": "https://devicons.railway.app/i/postgresql.svg",
+      "name": "Postgres",
+      "build": {},
+      "deploy": {
+        "startCommand": null,
+        "healthcheckPath": null,
+        "restartPolicyType": "ON_FAILURE",
+        "restartPolicyMaxRetries": 10
+      },
+      "source": {
+        "image": "postgres:17.11-alpine"
+      },
+      "networking": {
+        "serviceDomains": {}
+      },
+      "volumeMounts": {
+        "9f1a3c5e-7b2d-4c68-a0e4-2d8b6f1c9e57": {
+          "mountPath": "/var/lib/postgresql/data"
+        }
+      },
+      "variables": {
+        "POSTGRES_DB": {
+          "defaultValue": "kan",
+          "description": "Database name",
+          "isOptional": false
+        },
+        "POSTGRES_USER": {
+          "defaultValue": "kan",
+          "description": "Database user",
+          "isOptional": false
+        },
+        "POSTGRES_PASSWORD": {
+          "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Auto-generated database password",
+          "isOptional": false
+        },
+        "PGDATA": {
+          "defaultValue": "/var/lib/postgresql/data/pgdata",
+          "description": "Data subdirectory - keeps Postgres happy on Railway volumes",
+          "isOptional": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "60",
+          "description": "Time for Postgres to shut down cleanly on redeploy",
+          "isOptional": false
+        }
+      }
+    }
+  }
+}
